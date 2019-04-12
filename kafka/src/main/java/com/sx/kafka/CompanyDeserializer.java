@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 /**
+ * 自定义反序列化器
+ * <p>
  * created at 2019/4/10
  *
  * @author shixi
@@ -45,7 +47,7 @@ public class CompanyDeserializer implements Deserializer<Company> {
             e.printStackTrace();
         }
 
-        return new Company(name, address);
+        return new Company(name, address, null);
     }
 
     @Override

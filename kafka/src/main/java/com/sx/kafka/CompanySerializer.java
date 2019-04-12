@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 /**
+ * 自定义序列化器
+ *
  * created at 2019/4/10
  *
  * @author shixi
@@ -42,6 +44,7 @@ public class CompanySerializer implements Serializer<Company> {
             buffer.put(name);
             buffer.putInt(address.length);
             buffer.put(address);
+//            throw new RuntimeException("测试消息发送失败");
             return buffer.array();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

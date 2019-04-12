@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 消息对象
  * created at 2019/4/10
  *
  * @author shixi
@@ -18,4 +19,5 @@ import lombok.NoArgsConstructor;
 public class Company {
     private String name;
     private String address;
+    private String id;
 }

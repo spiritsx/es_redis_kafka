@@ -1,11 +1,10 @@
 package com.sx.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
 /**
  * created at 2019/4/10 0010
@@ -21,10 +20,15 @@ public class ProducerFastStart {
     public static void main(String[] args) {
         Properties properties = new Properties();
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        properties.put("value.serializer", CompanySerializer.class.getName());
-        properties.put("bootstrap.servers", brokerList);
-        KafkaProducer<String, Company> producer = new KafkaProducer<>(properties);
+//        properties.put("value.serializer", CompanySerializer.class.getName());
+        properties.put("value.serializer", ProtostuffSerializerDemo.class.getName());
 
+        properties.put("bootstrap.servers", brokerList);
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, DemoPartitioner.class.getName());
+        properties.put(ProducerConfig.RETRIES_CONFIG, 10);
+        properties.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, ProducerInterceptorPrefix.class.getName() +
+                "," + ProducerInterceptorPrefixPlus.class.getName());
+        KafkaProducer<String, Company> producer = new KafkaProducer<>(properties);
 
         for (int i = 0; i < 5; i++) {
             Company company = Company.builder().name("hiddenKafka-->" + i)
@@ -46,7 +50,6 @@ public class ProducerFastStart {
             });
 
         }
-
 
         producer.close();
     }

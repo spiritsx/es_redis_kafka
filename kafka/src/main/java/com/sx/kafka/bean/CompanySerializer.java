@@ -1,4 +1,4 @@
-package com.sx.kafka;
+package com.sx.kafka.bean;
 
 
 import org.apache.kafka.common.serialization.Serializer;

@@ -1,4 +1,4 @@
-package com.sx.kafka;
+package com.sx.kafka.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

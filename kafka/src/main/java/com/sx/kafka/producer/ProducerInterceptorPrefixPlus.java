@@ -1,5 +1,6 @@
-package com.sx.kafka;
+package com.sx.kafka.producer;
 
+import com.sx.kafka.bean.Company;
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;

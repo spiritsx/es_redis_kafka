@@ -1,9 +1,13 @@
-package com.sx.kafka;
+package com.sx.kafka.consumer;
 
+import com.sx.kafka.bean.ProtostuffDeserializerDemo;
+import com.sx.kafka.bean.Company;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.common.protocol.types.Field;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -27,20 +31,22 @@ public class ConsumerFastStart {
         Properties properties = new Properties();
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 //        properties.put("value.deserializer", CompanyDeserializer.class.getName());
-        properties.put("value.deserializer", ProtostuffDeserializerDemo.class.getName());
+//        properties.put("value.deserializer", ProtostuffDeserializerDemo.class.getName());
+        properties.put("value.deserializer", StringDeserializer.class.getName());
         properties.put("bootstrap.servers", brokerList);
         properties.put("group.id", groupId);
         properties.put("client.id", "consumer.client.id.demo");
+//        properties.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, ConsumerInterceptorTTL.class.getName());
         return properties;
     }
 
     public static void main(String[] args) {
         Properties properties = initConfig();
-        KafkaConsumer<String, Company> consumer = new KafkaConsumer<>(properties);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(Arrays.asList(topic));
         while (isRunning.get()) {
-            ConsumerRecords<String, Company> records = consumer.poll(Duration.ofMillis(1000));
-            for (ConsumerRecord<String, Company> record : records.records(topic)) {
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+            for (ConsumerRecord<String, String> record : records.records(topic)) {
                 System.out.println("topic=" + record.topic() + ", partition= " + record.partition() + ", offset=" + record.offset());
                 System.out.println("key=" + record.key() + ", value=" + record.value());
             }

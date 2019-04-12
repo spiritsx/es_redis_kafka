@@ -1,5 +1,6 @@
-package com.sx.kafka;
+package com.sx.kafka.bean;
 
+import com.sx.kafka.bean.Company;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;

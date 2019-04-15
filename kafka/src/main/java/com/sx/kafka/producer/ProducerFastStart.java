@@ -18,7 +18,8 @@ public class ProducerFastStart {
 
     //    public static final String brokerList = "47.107.164.213:9092,47.107.164.213:9093,47.107.164.213:9094";
     public static final String brokerList = "47.107.164.213:9092";
-    public static final String topic = "topic-demo";
+//    public static final String topic = "topic-demo";
+    public static final String topic = "msg_format_v2";
     public static final long EXPIRE_INTERVAL = 10 * 1000;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -69,9 +70,9 @@ public class ProducerFastStart {
 //                System.currentTimeMillis() - EXPIRE_INTERVAL, null, "last-expire-data");
 //        producer.send(record2).get();
 
-        for (int i = 0; i < 20; i++) {
-            ProducerRecord<String, String> record = new ProducerRecord<>(topic,
-                    "threaddemo===《" + i + "》");
+        for (int i = 0; i < 6; i++) {
+            ProducerRecord<String, String> record = new ProducerRecord<>(topic,"key",
+                    "value");
             producer.send(record);
         }
 
